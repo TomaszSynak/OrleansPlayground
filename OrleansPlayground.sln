@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "Projects\API\API.csproj", "{57485C87-B23C-4407-8A6E-08B63881800E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grains", "Projects\Grains\Grains.csproj", "{72903237-9BC2-424C-B5D2-8CA8D4AF5CE1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Interfaces", "Projects\Interfaces\Interfaces.csproj", "{7D077D31-0929-4157-BD82-C1B71BED7830}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{D69D7C48-BC4D-42FC-9EE6-17480D9FB83D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".slnResources", ".slnResources", "{86FB09E0-15F4-463B-9CA3-16157EEF681D}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		OrleansPlayground.ruleset = OrleansPlayground.ruleset
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{57485C87-B23C-4407-8A6E-08B63881800E}.Debug|x64.ActiveCfg = Debug|x64
+		{57485C87-B23C-4407-8A6E-08B63881800E}.Debug|x64.Build.0 = Debug|x64
+		{57485C87-B23C-4407-8A6E-08B63881800E}.Release|x64.ActiveCfg = Release|x64
+		{57485C87-B23C-4407-8A6E-08B63881800E}.Release|x64.Build.0 = Release|x64
+		{72903237-9BC2-424C-B5D2-8CA8D4AF5CE1}.Debug|x64.ActiveCfg = Debug|x64
+		{72903237-9BC2-424C-B5D2-8CA8D4AF5CE1}.Debug|x64.Build.0 = Debug|x64
+		{72903237-9BC2-424C-B5D2-8CA8D4AF5CE1}.Release|x64.ActiveCfg = Release|x64
+		{72903237-9BC2-424C-B5D2-8CA8D4AF5CE1}.Release|x64.Build.0 = Release|x64
+		{7D077D31-0929-4157-BD82-C1B71BED7830}.Debug|x64.ActiveCfg = Debug|x64
+		{7D077D31-0929-4157-BD82-C1B71BED7830}.Debug|x64.Build.0 = Debug|x64
+		{7D077D31-0929-4157-BD82-C1B71BED7830}.Release|x64.ActiveCfg = Release|x64
+		{7D077D31-0929-4157-BD82-C1B71BED7830}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{57485C87-B23C-4407-8A6E-08B63881800E} = {D69D7C48-BC4D-42FC-9EE6-17480D9FB83D}
+		{72903237-9BC2-424C-B5D2-8CA8D4AF5CE1} = {D69D7C48-BC4D-42FC-9EE6-17480D9FB83D}
+		{7D077D31-0929-4157-BD82-C1B71BED7830} = {D69D7C48-BC4D-42FC-9EE6-17480D9FB83D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4F92E200-0A5E-4340-9512-C12423449F97}
+	EndGlobalSection
+EndGlobal
