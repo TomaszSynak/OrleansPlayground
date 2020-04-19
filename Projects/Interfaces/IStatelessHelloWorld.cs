@@ -2,7 +2,7 @@ namespace Interfaces
 {
     using System.Threading.Tasks;
 
-    public interface IHelloWorld : Orleans.IGrainWithIntegerKey
+    public interface IStatelessHelloWorld : Orleans.IGrainWithIntegerKey
     {
         Task<string> SayHello();
     }
