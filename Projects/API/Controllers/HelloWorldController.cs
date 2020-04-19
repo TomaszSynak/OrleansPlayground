@@ -9,16 +9,24 @@ namespace ASPNetCoreHostedServices.Controllers
     [Route("api/hello")]
     public class HelloWorldController : ControllerBase
     {
-        private readonly IGrainFactory _client;
-        private readonly IStatelessHelloWorld _grain;
+        private readonly IStatelessHelloWorld _statelessHelloWorld;
+
+        private readonly IStatefulHelloWorld _statefulHelloWorld;
 
         public HelloWorldController(IGrainFactory client)
         {
-            _client = client;
-            _grain = _client.GetGrain<IStatelessHelloWorld>(0);
+            _statelessHelloWorld = client.GetGrain<IStatelessHelloWorld>(0);
+
+            _statefulHelloWorld = client.GetGrain<IStatefulHelloWorld>(0);
         }
 
-        [HttpGet]
-        public Task<string> SayHello() => _grain.SayHello();
+        [HttpGet("stateless")]
+        public async Task<string> StatelessHello() => await _statelessHelloWorld.SayHello();
+
+        [HttpGet("stateful")]
+        public async Task<string> StatefulHello() => await _statefulHelloWorld.SayHello();
+
+        [HttpGet("stateful/add")]
+        public async Task AddStatefulHello() => await _statefulHelloWorld.SaveGreeting();
     }
 }

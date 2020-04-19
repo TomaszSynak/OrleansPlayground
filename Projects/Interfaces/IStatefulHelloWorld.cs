@@ -5,5 +5,7 @@
     public interface IStatefulHelloWorld : Orleans.IGrainWithIntegerKey
     {
         Task<string> SayHello();
+
+        Task SaveGreeting();
     }
 }

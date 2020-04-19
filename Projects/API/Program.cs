@@ -54,7 +54,7 @@ namespace ASPNetCoreHostedServices
                             parts.AddFromApplicationBaseDirectory();
                         })
                         .AddAzureBlobGrainStorage(
-                         name: "BlobStore",
+                         name: "HelloWorldStore",
                          configureOptions: opts =>
                          {
                              opts.UseJson = true;
