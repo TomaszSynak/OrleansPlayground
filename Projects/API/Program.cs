@@ -6,12 +6,15 @@ namespace ASPNetCoreHostedServices
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
     using Orleans;
     using Orleans.Configuration;
     using Orleans.Hosting;
 
     public class Program
     {
+        private const string ConnectionString = "AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;DefaultEndpointsProtocol=http;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;";
+
         public static Task Main(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
@@ -39,7 +42,14 @@ namespace ASPNetCoreHostedServices
                 .UseOrleans(siloBuilder =>
                 {
                     siloBuilder
-                        .UseLocalhostClustering()
+                        .UseAzureStorageClustering(options =>
+                        {
+                            options.ConnectionString = ConnectionString;
+                        })
+                        .ConfigureEndpoints(siloPort: 11111, gatewayPort: 30000)
+                        .ConfigureLogging(options => options.SetMinimumLevel(LogLevel.Warning))
+
+                        // .UseLocalhostClustering()
                         .Configure<ClusterOptions>(opts =>
                         {
                             opts.ClusterId = "dev";
@@ -59,7 +69,7 @@ namespace ASPNetCoreHostedServices
                          {
                              opts.UseJson = true;
                              opts.ContainerName = "orleans-container";
-                             opts.ConnectionString = "AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;DefaultEndpointsProtocol=http;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;";
+                             opts.ConnectionString = ConnectionString;
                          })
                         .UseDashboard(opts =>
                         {
