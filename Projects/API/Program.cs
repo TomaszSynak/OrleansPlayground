@@ -23,27 +23,29 @@ namespace ASPNetCoreHostedServices
                 .ConfigureServices((hostBuilderContext, services) =>
                 {
                     services.AddControllers();
-                    _connectionString = hostBuilderContext.Configuration["StorageConnectionString"];
+                    _connectionString = hostBuilderContext.Configuration["StorageConnectionString-Local"];
                 })
                 .UseOrleans(siloBuilder =>
                 {
                     siloBuilder
-                        .UseAzureStorageClustering(options =>
+                        .UseAzureStorageClustering(opts =>
                         {
-                            options.ConnectionString = _connectionString;
+                            opts.ConnectionString = _connectionString;
+                            opts.TableName = "OrleansSiloInstancesLocal";
                         })
-                        .ConfigureEndpoints(siloPort: 11111, gatewayPort: 30000)
-                        .ConfigureLogging(options => options.SetMinimumLevel(LogLevel.Warning))
 
-                        // .UseLocalhostClustering()
+                        // .ConfigureEndpoints(siloPort: 22222, gatewayPort: 30000)
+                        .ConfigureLogging(opts => opts.SetMinimumLevel(LogLevel.Warning))
                         .Configure<ClusterOptions>(opts =>
                         {
                             opts.ClusterId = "dev";
-                            opts.ServiceId = "HellowWorldAPIService";
+                            opts.ServiceId = "HellowWorldAPIServiceLocal";
                         })
                         .Configure<EndpointOptions>(opts =>
                         {
                             opts.AdvertisedIPAddress = IPAddress.Loopback;
+                            opts.SiloPort = 11111;
+                            opts.GatewayPort = 30000;
                         })
                         .ConfigureApplicationParts(parts =>
                         {
