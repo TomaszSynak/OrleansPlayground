@@ -39,7 +39,7 @@ namespace HotDesk
                         .Configure<ClusterOptions>(opts =>
                         {
                             opts.ClusterId = "dev";
-                            opts.ServiceId = "HellowWorldAPIServiceLocal";
+                            opts.ServiceId = "HotDesksLocalApi";
                         })
                         .Configure<EndpointOptions>(opts =>
                         {
@@ -59,6 +59,15 @@ namespace HotDesk
                              opts.ContainerName = "orleans-container";
                              opts.ConnectionString = _connectionString;
                          })
+                        .AddAzureTableGrainStorage(
+                            "HotDesksStorage",
+                            opts =>
+                            {
+                                opts.UseFullAssemblyNames = false;
+                                opts.UseJson = true;
+                                opts.TableName = "HotDesks";
+                                opts.ConnectionString = _connectionString;
+                            })
                         .UseDashboard(opts =>
                         {
                             opts.Username = "admin";
