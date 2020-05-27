@@ -2,7 +2,6 @@ namespace ASPNetCoreHostedServices
 {
     using System.Net;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
@@ -13,51 +12,40 @@ namespace ASPNetCoreHostedServices
 
     public class Program
     {
-        private const string ConnectionString = "AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;DefaultEndpointsProtocol=http;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;";
+        private static string _connectionString = string.Empty;
 
         public static Task Main(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.Configure((ctx, app) =>
-                    {
-                        if (ctx.HostingEnvironment.IsDevelopment())
-                        {
-                            app.UseDeveloperExceptionPage();
-                        }
-
-                        app.UseHttpsRedirection();
-                        app.UseRouting();
-                        app.UseAuthorization();
-                        app.UseEndpoints(endpoints =>
-                        {
-                            endpoints.MapControllers();
-                        });
-                    });
+                    webBuilder.Configure(Startup.Configure);
                 })
-                .ConfigureServices(services =>
+                .ConfigureServices((hostBuilderContext, services) =>
                 {
                     services.AddControllers();
+                    _connectionString = hostBuilderContext.Configuration["StorageConnectionString-Local"];
                 })
                 .UseOrleans(siloBuilder =>
                 {
                     siloBuilder
-                        .UseAzureStorageClustering(options =>
+                        .UseAzureStorageClustering(opts =>
                         {
-                            options.ConnectionString = ConnectionString;
+                            opts.ConnectionString = _connectionString;
+                            opts.TableName = "OrleansSiloInstancesLocal";
                         })
-                        .ConfigureEndpoints(siloPort: 11111, gatewayPort: 30000)
-                        .ConfigureLogging(options => options.SetMinimumLevel(LogLevel.Warning))
 
-                        // .UseLocalhostClustering()
+                        // .ConfigureEndpoints(siloPort: 22222, gatewayPort: 30000)
+                        .ConfigureLogging(opts => opts.SetMinimumLevel(LogLevel.Warning))
                         .Configure<ClusterOptions>(opts =>
                         {
                             opts.ClusterId = "dev";
-                            opts.ServiceId = "HellowWorldAPIService";
+                            opts.ServiceId = "HellowWorldAPIServiceLocal";
                         })
                         .Configure<EndpointOptions>(opts =>
                         {
                             opts.AdvertisedIPAddress = IPAddress.Loopback;
+                            opts.SiloPort = 11111;
+                            opts.GatewayPort = 30000;
                         })
                         .ConfigureApplicationParts(parts =>
                         {
@@ -69,7 +57,7 @@ namespace ASPNetCoreHostedServices
                          {
                              opts.UseJson = true;
                              opts.ContainerName = "orleans-container";
-                             opts.ConnectionString = ConnectionString;
+                             opts.ConnectionString = _connectionString;
                          })
                         .UseDashboard(opts =>
                         {

@@ -1,12 +1,15 @@
-namespace ASPNetCoreHostedServices.Controllers
+namespace ASPNetCoreHostedServices.Components
 {
     using System.Threading.Tasks;
     using Interfaces;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Orleans;
 
     [ApiController]
+    [AllowAnonymous]
     [Route("api/hello")]
+    [Produces("application/json")]
     public class HelloWorldController : ControllerBase
     {
         private readonly IStatelessHelloWorld _statelessHelloWorld;
