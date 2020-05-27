@@ -1,4 +1,4 @@
-namespace ASPNetCoreHostedServices
+namespace HotDesk
 {
     using System.Net;
     using System.Threading.Tasks;
@@ -23,7 +23,7 @@ namespace ASPNetCoreHostedServices
                 .ConfigureServices((hostBuilderContext, services) =>
                 {
                     services.AddControllers();
-                    _connectionString = hostBuilderContext.Configuration["StorageConnectionString-Local"];
+                    _connectionString = hostBuilderContext.Configuration["StorageConnectionString"];
                 })
                 .UseOrleans(siloBuilder =>
                 {
@@ -39,7 +39,7 @@ namespace ASPNetCoreHostedServices
                         .Configure<ClusterOptions>(opts =>
                         {
                             opts.ClusterId = "dev";
-                            opts.ServiceId = "HellowWorldAPIServiceLocal";
+                            opts.ServiceId = "HotDesksLocalApi";
                         })
                         .Configure<EndpointOptions>(opts =>
                         {
@@ -59,6 +59,15 @@ namespace ASPNetCoreHostedServices
                              opts.ContainerName = "orleans-container";
                              opts.ConnectionString = _connectionString;
                          })
+                        .AddAzureTableGrainStorage(
+                            "HotDesksStorage",
+                            opts =>
+                            {
+                                opts.UseFullAssemblyNames = false;
+                                opts.UseJson = true;
+                                opts.TableName = "HotDesks";
+                                opts.ConnectionString = _connectionString;
+                            })
                         .UseDashboard(opts =>
                         {
                             opts.Username = "admin";

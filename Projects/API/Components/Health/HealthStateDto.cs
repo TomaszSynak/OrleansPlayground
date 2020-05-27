@@ -1,4 +1,4 @@
-﻿namespace ASPNetCoreHostedServices.Components.Health
+﻿namespace HotDesk.Components.Health
 {
     public class HealthStateDto
     {
