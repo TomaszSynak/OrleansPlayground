@@ -1,4 +1,4 @@
-namespace ASPNetCoreHostedServices
+namespace HotDesk
 {
     using System.Net;
     using System.Threading.Tasks;
@@ -23,7 +23,7 @@ namespace ASPNetCoreHostedServices
                 .ConfigureServices((hostBuilderContext, services) =>
                 {
                     services.AddControllers();
-                    _connectionString = hostBuilderContext.Configuration["StorageConnectionString-Local"];
+                    _connectionString = hostBuilderContext.Configuration["StorageConnectionString"];
                 })
                 .UseOrleans(siloBuilder =>
                 {

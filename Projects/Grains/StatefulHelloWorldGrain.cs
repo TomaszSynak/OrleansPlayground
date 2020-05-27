@@ -1,6 +1,5 @@
 namespace Grains
 {
-    using System;
     using System.Threading.Tasks;
     using Interfaces;
     using Microsoft.Extensions.Logging;
@@ -19,7 +18,7 @@ namespace Grains
             _helloWorldState = helloWorldState;
         }
 
-        public async Task<string> SayHello() => await Task.FromResult(_helloWorldState.State.Greetings);
+        public async Task<string> SayHello() => await Task.FromResult(_helloWorldState.State.Greetings ?? "State is empty");
 
         public async Task SaveGreeting()
         {

@@ -1,4 +1,4 @@
-﻿namespace ASPNetCoreHostedServices.Components.Health
+﻿namespace HotDesk.Components.Health
 {
     using System.Net;
     using System.Reflection;

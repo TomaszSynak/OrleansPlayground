@@ -1,4 +1,4 @@
-namespace ASPNetCoreHostedServices.Components
+namespace HotDesk.Components
 {
     using System.Threading.Tasks;
     using Interfaces;

@@ -12,7 +12,7 @@
 		<Platforms>x64</Platforms>
 		<TargetLatestRuntimePatch>True</TargetLatestRuntimePatch>
 
-		<RootNamespace>ASPNetCoreHostedServices</RootNamespace>
+		<RootNamespace>HotDesk</RootNamespace>
 
 		<NoWarn>$(NoWarn);1591</NoWarn>
 
